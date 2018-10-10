@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-user',
@@ -14,6 +15,8 @@ export class UserComponent implements OnInit {
   address: Address;
   hobbies: string[];
   hello: any;
+  posts: Post[];
+  isEdit: boolean;
 
   constructor(private dataService: DataService) {
     console.log('Constructor ran..');
@@ -37,6 +40,10 @@ export class UserComponent implements OnInit {
       'play guiter'
     ];
     this.hello = true;
+    this.dataService.getPosts().subscribe((posts) => {
+       // console.log(posts);
+       this.posts = posts;
+    });
   }
   onClick() {
     this.name = 'Gem';
@@ -58,10 +65,21 @@ export class UserComponent implements OnInit {
    // this.hobbies.shift(hobby);
     console.log(hobby);
   }
+
+  toggleEdit() {
+    this.isEdit = !this.isEdit;
+  }
 }
 
 interface Address {
   street: string;
   city: string;
   state: string;
+}
+
+interface Post {
+  id: number;
+  title: string;
+  body: string;
+  userId: number;
 }

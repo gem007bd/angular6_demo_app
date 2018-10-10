@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { map } from 'rxjs/operators';
 
 
 
@@ -8,12 +9,13 @@ import { Http } from '@angular/http';
 })
 export class DataService {
 
-  // constructor(public http: Http) {
-  //   console.log('dataservice is conncted');
-  //  }
+  constructor( public http: Http) {
+    console.log('dataservice is conncted');
+   }
 
-  //  getPosts() {
-  //    this.http.get('https://jsonplaceholder.typicode.com/posts')
-  //    .toPromise(Map.r;
-  //  }
+  getPosts() {
+    return this.http.get('http://jsonplaceholder.typicode.com/posts')
+      .pipe(map(res => res.json()));
+  }
 }
+
